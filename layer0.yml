@@ -1,0 +1,29 @@
+# LAYER 0:
+# INDEX - BUTTON - ACTION
+# 0 - LB - LEFT CLICK
+# 1 - RB - RIGHT CLICK
+# 2 - LEFT - MOUSE LEFT
+# 3 - DOWN - MOUSE DOWN
+# 4 - RIGHT - MOUSE RIGHT
+# 5 - UP - MOUSE UP
+# 6 - LT - ESC
+# 7 - RT - RETURN
+# 8 - BACK - CHANGE LAYER
+# 9 - START - SHOW LAYER
+# 10 - X - LEFT
+# 11 - Y - UP
+# 12 - B - RIGHT
+# 13 - A - DOWN
+
+LB:
+RB:
+LEFT-X:
+LEFT-Y:
+LT: "esc"
+RT: "return"
+BACK:
+START:
+X: "left"
+Y: "up"
+B: "right"
+A: "down"
