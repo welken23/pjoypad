@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # notification display time in milliseconds
-time=3000
+time=4000
 # notification id
 id=10000
 # close notification with id
