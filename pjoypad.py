@@ -65,8 +65,8 @@ def changeLayer():
 
 def updateDict():
     global dict
-    configpath = sys.argv[2]
-    with open(configpath, 'r') as file:
+    configPath = sys.argv[2]
+    with open(configPath, 'r') as file:
         config = yaml.safe_load(file)
     if config[buttonLB] is None:
         dict[buttonLB] = "None"
@@ -126,7 +126,7 @@ def updateDict():
         dict[buttonA] = config[buttonA]
     print(dict)
 
-def LB_Pressed():
+def pressedLB():
     b = dict.get(buttonLB)
     if b == "None":
         print('LB Pressed')
@@ -135,7 +135,7 @@ def LB_Pressed():
         print('LB Pressed')
         pyautogui.keyDown(b)
 
-def LB_Released():
+def releasedLB():
     b = dict.get(buttonLB)
     if b == "None":
         print('LB Released')
@@ -144,7 +144,7 @@ def LB_Released():
         print('LB Released')
         pyautogui.keyUp(b)
 
-def RB_Pressed():
+def pressedRB():
     b = dict.get(buttonRB)
     if b == "None":
         print('RB Pressed')
@@ -153,7 +153,7 @@ def RB_Pressed():
         print('RB Pressed')
         pyautogui.keyDown(b)
 
-def RB_Released():
+def releasedRB():
     b = dict.get(buttonRB)
     if b == "None":
         print('RB Released')
@@ -162,7 +162,7 @@ def RB_Released():
         print('RB Released')
         pyautogui.keyUp(b)
 
-def BACK_Press():
+def pressBACK():
     b = dict.get(buttonBACK)
     if b == "None":
         changeLayer()
@@ -184,11 +184,11 @@ def main():
     updateDict()
     gamepad.startBackgroundUpdates()
 
-    gamepad.addButtonPressedHandler(buttonLB, LB_Pressed)
-    gamepad.addButtonReleasedHandler(buttonLB, LB_Released)
-    gamepad.addButtonPressedHandler(buttonRB, RB_Pressed)
-    gamepad.addButtonReleasedHandler(buttonRB, RB_Released)
-    gamepad.addButtonReleasedHandler(buttonBACK, BACK_Press)
+    gamepad.addButtonPressedHandler(buttonLB, pressedLB)
+    gamepad.addButtonReleasedHandler(buttonLB, releasedLB)
+    gamepad.addButtonPressedHandler(buttonRB, pressedRB)
+    gamepad.addButtonReleasedHandler(buttonRB, releasedRB)
+    gamepad.addButtonReleasedHandler(buttonBACK, pressBACK)
 
     try:
         while running and gamepad.isConnected():
