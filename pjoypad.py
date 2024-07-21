@@ -38,13 +38,30 @@ buttonY = "Y"
 buttonB = "B"
 buttonA = "A"
 
+def killDubProcesses():
+    subprocess.call('for i in $(ps aux|grep \'pjoypad.py\'|grep -v grep|awk \'{print $2}\'|head -n -1); do kill "$i"; done', shell=True)
+
 def changeLayer():
-    filepath = os.path.realpath(__file__)
-    print(filepath)
-    dirpath = os.path.dirname(os.path.abspath(sys.argv[2]))
-    print(dirpath)
-    layerpath = dirpath + "/" + sys.argv[2]
-    print(layerpath)
+    layerList = []
+    currentIndex = 0
+    filePath = os.path.realpath(__file__)
+    dirPath = os.path.dirname(os.path.abspath(sys.argv[2]))
+    argPath = os.path.abspath(sys.argv[2])
+    for layer in os.listdir(dirPath):
+        if layer.endswith(".yml"):
+            fPathLayer = dirPath + "/" + layer
+            layerList.append(fPathLayer)
+    for i in range(len(layerList)):
+        if layerList[i] == argPath:
+            currentIndex = i
+    lastIndex = len(layerList) - 1
+    if lastIndex > currentIndex:
+        nextIndex = currentIndex + 1
+    else:
+        nextIndex = 0
+    command = dirPath + "/" + "change-layer.sh " + filePath + " --config " + layerList[nextIndex]
+    print(command + "\n")
+    subprocess.call('{0}'.format(command), shell=True)
 
 def updateDict():
     global dict
@@ -163,7 +180,7 @@ def main():
     gamepad = gamepadType()
     print('Gamepad connected')
 
-
+    killDubProcesses()
     updateDict()
     gamepad.startBackgroundUpdates()
 
