@@ -215,6 +215,54 @@ def pressSTART():
     if b == "None":
         showLayer()
 
+def pressedX():
+    b = dict.get(buttonX)
+    if b != "None":
+        print('X Pressed')
+        pyautogui.keyDown(b)
+
+def releasedX():
+    b = dict.get(buttonX)
+    if b != "None":
+        print('X Released')
+        pyautogui.keyUp(b)
+
+def pressedY():
+    b = dict.get(buttonY)
+    if b != "None":
+        print('Y Pressed')
+        pyautogui.keyDown(b)
+
+def releasedY():
+    b = dict.get(buttonY)
+    if b != "None":
+        print('Y Released')
+        pyautogui.keyUp(b)
+
+def pressedB():
+    b = dict.get(buttonB)
+    if b != "None":
+        print('B Pressed')
+        pyautogui.keyDown(b)
+
+def releasedB():
+    b = dict.get(buttonB)
+    if b != "None":
+        print('B Released')
+        pyautogui.keyUp(b)
+
+def pressedA():
+    b = dict.get(buttonA)
+    if b != "None":
+        print('A Pressed')
+        pyautogui.keyDown(b)
+
+def releasedA():
+    b = dict.get(buttonA)
+    if b != "None":
+        print('A Released')
+        pyautogui.keyUp(b)
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type = argparse.FileType('r', encoding = 'UTF-8'), required = True, help = "path to the configuration file")
@@ -238,6 +286,14 @@ def main():
     gamepad.addButtonReleasedHandler(buttonRB, releasedRB)
     gamepad.addButtonReleasedHandler(buttonBACK, pressBACK)
     gamepad.addButtonReleasedHandler(buttonSTART, pressSTART)
+    gamepad.addButtonReleasedHandler(buttonX, pressedX)
+    gamepad.addButtonReleasedHandler(buttonX, releasedX)
+    gamepad.addButtonReleasedHandler(buttonY, pressedY)
+    gamepad.addButtonReleasedHandler(buttonY, releasedY)
+    gamepad.addButtonReleasedHandler(buttonB, pressedB)
+    gamepad.addButtonReleasedHandler(buttonB, releasedB)
+    gamepad.addButtonReleasedHandler(buttonA, pressedA)
+    gamepad.addButtonReleasedHandler(buttonA, releasedA)
 
     try:
         while running and gamepad.isConnected():
