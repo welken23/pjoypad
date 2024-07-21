@@ -59,7 +59,50 @@ def changeLayer():
         nextIndex = currentIndex + 1
     else:
         nextIndex = 0
-    command = dirPath + "/" + "change-layer.sh " + filePath + " --config " + layerList[nextIndex]
+    command = dirPath + "/change-layer.sh " + filePath + " --config " + layerList[nextIndex]
+    print(command + "\n")
+    subprocess.call('{0}'.format(command), shell=True)
+
+def showLayer():
+    layerList = []
+    currentIndex = 0
+    dirPath = os.path.dirname(os.path.abspath(sys.argv[2]))
+    argPath = os.path.abspath(sys.argv[2])
+    for layer in os.listdir(dirPath):
+        if layer.endswith(".yml"):
+            fPathLayer = dirPath + "/" + layer
+            layerList.append(fPathLayer)
+    for i in range(len(layerList)):
+        if layerList[i] == argPath:
+            currentIndex = i
+    b0 = "==LAYER" + str(currentIndex) + "=="
+    b1 = dict.get(buttonLB)
+    b2 = dict.get(buttonRB)
+    b3 = dict.get(buttonLEFT)
+    b4 = dict.get(buttonDOWN)
+    b5 = dict.get(buttonLT)
+    b6 = dict.get(buttonRT)
+    b7 = dict.get(buttonBACK)
+    b8 = dict.get(buttonSTART)
+    b9 = dict.get(buttonX)
+    b10 = dict.get(buttonY)
+    b11 = dict.get(buttonB)
+    b12 = dict.get(buttonA)
+    buttonList = "\"" \
+            + b0 + "\n" \
+            + buttonLB + ": " + b1 + "\n" \
+            + buttonRB + ": " + b2 + "\n" \
+            + buttonLEFT + ": " + b3 + "\n" \
+            + buttonDOWN + ": " + b4 + "\n" \
+            + buttonLT + ": " + b5 + "\n" \
+            + buttonRT + ": " + b6 + "\n" \
+            + buttonBACK + ": " + b7 + "\n" \
+            + buttonSTART + ": " + b8 + "\n" \
+            + buttonX + ": " + b9 + "\n" \
+            + buttonY + ": " + b10 + "\n" \
+            + buttonB + ": " + b11 + "\n" \
+            + buttonA + ": " + b12 + "\""
+    command = dirPath + "/show-layer.sh " + buttonList
     print(command + "\n")
     subprocess.call('{0}'.format(command), shell=True)
 
@@ -167,6 +210,11 @@ def pressBACK():
     if b == "None":
         changeLayer()
 
+def pressSTART():
+    b = dict.get(buttonSTART)
+    if b == "None":
+        showLayer()
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type = argparse.FileType('r', encoding = 'UTF-8'), required = True, help = "path to the configuration file")
@@ -189,6 +237,7 @@ def main():
     gamepad.addButtonPressedHandler(buttonRB, pressedRB)
     gamepad.addButtonReleasedHandler(buttonRB, releasedRB)
     gamepad.addButtonReleasedHandler(buttonBACK, pressBACK)
+    gamepad.addButtonReleasedHandler(buttonSTART, pressSTART)
 
     try:
         while running and gamepad.isConnected():
