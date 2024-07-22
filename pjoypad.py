@@ -127,14 +127,6 @@ def updateDict():
         dict[buttonDOWN] = "None"
     else:
         dict[buttonDOWN] = config[buttonDOWN]
-    #if config[buttonRIGHT] is None:
-    #    dict[buttonRIGHT] = "None"
-    #else:
-    #    dict[buttonRIGHT] = config[buttonRIGHT]
-    #if config[buttonUP] is None:
-    #    dict[buttonUP] = "None"
-    #else:
-    #    dict[buttonUP] = config[buttonUP]
     if config[buttonLT] is None:
         dict[buttonLT] = "None"
     else:
