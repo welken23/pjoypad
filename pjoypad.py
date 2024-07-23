@@ -47,7 +47,7 @@ def changeLayer():
     filePath = os.path.realpath(__file__)
     dirPath = os.path.dirname(os.path.abspath(sys.argv[2]))
     argPath = os.path.abspath(sys.argv[2])
-    for layer in os.listdir(dirPath):
+    for layer in sorted(os.listdir(dirPath)):
         if layer.endswith(".yml"):
             fPathLayer = dirPath + "/" + layer
             layerList.append(fPathLayer)
@@ -68,7 +68,7 @@ def showLayer():
     currentIndex = 0
     dirPath = os.path.dirname(os.path.abspath(sys.argv[2]))
     argPath = os.path.abspath(sys.argv[2])
-    for layer in os.listdir(dirPath):
+    for layer in sorted(os.listdir(dirPath)):
         if layer.endswith(".yml"):
             fPathLayer = dirPath + "/" + layer
             layerList.append(fPathLayer)
