@@ -1,29 +1,107 @@
-# LAYER 0:
-# INDEX - BUTTON - ACTION
-# 0 - LB - LEFT CLICK
-# 1 - RB - RIGHT CLICK
-# 2 - LEFT - MOUSE LEFT
-# 3 - DOWN - MOUSE DOWN
-# 4 - RIGHT - MOUSE RIGHT
-# 5 - UP - MOUSE UP
-# 6 - LT - ESC
-# 7 - RT - RETURN
-# 8 - BACK - CHANGE LAYER
-# 9 - START - SHOW LAYER
-# 10 - X - LEFT
-# 11 - Y - UP
-# 12 - B - RIGHT
-# 13 - A - DOWN
+############################################
+#           POSSIBLE VALUES                #
+############################################
+#
+# 0  BACK: "changeLayer()"
+# 1  START: "showLayer()"
+# 2  LEFT-X: "", "left", "any button"
+# 3  LEFT-Y: "", "down", "any button"
+# 4  RIGHT: "", "any button" (is used only if LEFT-X != "" and LEFT-X != "left")
+# 5  UP: "", "any button" (is used only if LEFT-Y != "" and LEFT-Y != "down")
+# 6  LT: "any button"
+# 7  RT: "any button"
+# 8  LB: "", "LDclick", "any button"
+# 9  RB: "", "any button"
+#10  X: "any button"
+#11  Y: "any button"
+#12  B: "any button"
+#13  A: "any button"
 
-LB:
-RB:
-LEFT-X:
-LEFT-Y:
-LT: "esc"
-RT: "f"
-BACK:
-START:
-X: "left"
-Y: "up"
-B: "right"
-A: "down"
+
+############################################
+# LIST OF POSSIBLE VALUES FOR "any button" #
+############################################
+#
+# "Any button" can have any value from the following array: ['\t', '\n', '\r',
+# ' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.',
+# '/', '0', '1', '2', '3', '4', '5', '6', '7','8', '9', ':', ';', '<', '=',
+# '>', '?', '@', '[', '\\', ']', '^', '_', '`',
+# 'a', 'b', 'c', 'd', 'e','f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+# 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~',
+# 'accept', 'add', 'alt', 'altleft', 'altright', 'apps', 'backspace',
+# 'browserback', 'browserfavorites', 'browserforward', 'browserhome',
+# 'browserrefresh', 'browsersearch', 'browserstop', 'capslock', 'clear',
+# 'convert', 'ctrl', 'ctrlleft', 'ctrlright', 'decimal', 'del', 'delete',
+# 'divide', 'down', 'end', 'enter', 'esc', 'escape', 'execute', 'f1', 'f10',
+# 'f11', 'f12', 'f13', 'f14', 'f15', 'f16', 'f17', 'f18', 'f19', 'f2', 'f20',
+# 'f21', 'f22', 'f23', 'f24', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9',
+# 'final', 'fn', 'hanguel', 'hangul', 'hanja', 'help', 'home', 'insert', 'junja',
+# 'kana', 'kanji', 'launchapp1', 'launchapp2', 'launchmail',
+# 'launchmediaselect', 'left', 'modechange', 'multiply', 'nexttrack',
+# 'nonconvert', 'num0', 'num1', 'num2', 'num3', 'num4', 'num5', 'num6',
+# 'num7', 'num8', 'num9', 'numlock', 'pagedown', 'pageup', 'pause', 'pgdn',
+# 'pgup', 'playpause', 'prevtrack', 'print', 'printscreen', 'prntscrn',
+# 'prtsc', 'prtscr', 'return', 'right', 'scrolllock', 'select', 'separator',
+# 'shift', 'shiftleft', 'shiftright', 'sleep', 'space', 'stop', 'subtract', 'tab',
+# 'up', 'volumedown', 'volumemute', 'volumeup', 'win', 'winleft', 'winright', 'yen',
+# 'command', 'option', 'optionleft', 'optionright']
+
+
+####################################
+#             DEFAULT              #
+####################################
+#
+# "LEFT-X" == "", left and right D-pad buttons control the movement of the mouse cursor
+# "LEFT-Y" == "", top and bottom D-pad buttons control the up and down movement of the mouse cursor
+# "LEFT-X" == "left", left and right D-pad buttons control the left and right buttons on the keyboard
+# "LEFT-Y" == "down", top and bottom buttons of the D-pad control the up and down buttons on the keyboard
+# "RIGHT", not used by default. Is used only if LEFT-X != "" and LEFT-X != "left"
+# "UP" , not used by default. Is used only if LEFT-Y != "" and LEFT-Y != "down"
+# "LB" == "", mouse left click
+# "LB" == "LDclick", mouse double left-click
+# "RB" == "", mouse right click
+
+
+####################################
+#            EXAMPLE               #
+####################################
+# FUNCTIONS:
+# 0  BACK: "changeLayer()"
+# 1  START: "showLayer()"
+#
+# AXIS:
+# 2  LEFT-X: ""
+# 3  LEFT-Y: ""
+# 4  RIGHT: ""
+# 5  UP: ""
+# 6  LT: "esc"
+# 7  RT: "return"
+#
+# BUTTONS:
+# 8  LB: ""
+# 9  RB: ""
+#10  X: "left"
+#11  Y: "up"
+#12  B: "right"
+#13  A: "down"
+
+
+FUNCTIONS:
+  BACK: "changeLayer()"
+  START: "showLayer()"
+
+AXIS:
+  LEFT-X: "h"
+  LEFT-Y: "j"
+  RIGHT: "l"
+  UP: "k"
+  LT: "esc"
+  RT: "return"
+
+BUTTONS:
+  LB: "LDclick"
+  RB: ""
+  X: "a"
+  Y: "w"
+  B: "d"
+  A: "s"
