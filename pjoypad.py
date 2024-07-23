@@ -11,7 +11,7 @@ import pyautogui
 import Gamepad
 
 gamepadType = Gamepad.Xbox360
-pollInterval = 0.1
+pollInterval = 0.05
 
 global running
 running = True
@@ -27,8 +27,8 @@ buttonLB = "LB"
 buttonRB = "RB"
 buttonLEFT = "LEFT-X"
 buttonDOWN = "LEFT-Y"
-buttonRIGHT = ""
-buttonUP = ""
+buttonRIGHT = "RIGHT"
+buttonUP = "UP"
 buttonLT = "LT"
 buttonRT = "RT"
 buttonBACK = "BACK"
@@ -75,33 +75,47 @@ def showLayer():
     for i in range(len(layerList)):
         if layerList[i] == argPath:
             currentIndex = i
-    b0 = "==LAYER" + str(currentIndex) + "=="
-    b1 = dict.get(buttonLB)
-    b2 = dict.get(buttonRB)
-    b3 = dict.get(buttonLEFT)
-    b4 = dict.get(buttonDOWN)
-    b5 = dict.get(buttonLT)
-    b6 = dict.get(buttonRT)
-    b7 = dict.get(buttonBACK)
-    b8 = dict.get(buttonSTART)
-    b9 = dict.get(buttonX)
-    b10 = dict.get(buttonY)
-    b11 = dict.get(buttonB)
-    b12 = dict.get(buttonA)
-    buttonList = "\"" \
-            + b0 + "\n" \
-            + buttonLB + ": " + b1 + "\n" \
-            + buttonRB + ": " + b2 + "\n" \
-            + buttonLEFT + ": " + b3 + "\n" \
-            + buttonDOWN + ": " + b4 + "\n" \
-            + buttonLT + ": " + b5 + "\n" \
-            + buttonRT + ": " + b6 + "\n" \
-            + buttonBACK + ": " + b7 + "\n" \
-            + buttonSTART + ": " + b8 + "\n" \
-            + buttonX + ": " + b9 + "\n" \
-            + buttonY + ": " + b10 + "\n" \
-            + buttonB + ": " + b11 + "\n" \
-            + buttonA + ": " + b12 + "\""
+    h1 = "\"" + "==LAYER" + str(currentIndex) + "==" + "\n\n"
+    h2 = "FUNCTIONS" + "\n"
+    h3 = "AXIS" + "\n"
+    h4 = "BUTTONS" + "\n"
+    b0 = buttonBACK + ": " + dict.get(buttonBACK) + "\n"
+    b1 = buttonSTART + ": " + dict.get(buttonSTART) + "\n\n"
+    b6 = buttonLT + ": " + dict.get(buttonLT) + "\n"
+    b7 = buttonRT + ": " + dict.get(buttonRT) + "\n\n"
+    b10 = buttonX + ": " + dict.get(buttonX) + "\n"
+    b11 = buttonY + ": " + dict.get(buttonY) + "\n"
+    b12 = buttonB + ": " + dict.get(buttonB) + "\n"
+    b13 = buttonA + ": " + dict.get(buttonA) + "\""
+    if dict.get(buttonLEFT) == "None":
+        b2 = buttonLEFT + ": mouse move left" + "\n"
+        b4 = buttonRIGHT + ": mouse move right" + "\n"
+    elif dict.get(buttonLEFT) == "left":
+        b2 = buttonLEFT + ": left" + "\n"
+        b4 = buttonRIGHT + ": right" + "\n"
+    else:
+        b2 = buttonLEFT + ": " + dict.get(buttonLEFT) + "\n"
+        b4 = buttonRIGHT + ": " + dict.get(buttonRIGHT) + "\n"
+    if dict.get(buttonDOWN) == "None":
+        b3 = buttonDOWN + ": mouse move down" + "\n"
+        b5 = buttonUP + ": mouse move up" + "\n"
+    elif dict.get(buttonDOWN) == "down":
+        b3 = buttonDOWN + ": down" + "\n"
+        b5 = buttonUP + ": up" + "\n"
+    else:
+        b3 = buttonDOWN + ": " + dict.get(buttonDOWN) + "\n"
+        b5 = buttonUP + ": " + dict.get(buttonUP) + "\n"
+    if dict.get(buttonLB) == "None":
+        b8 = buttonLB + ": mouse left click" + "\n"
+    elif dict.get(buttonLB) == "LDclick":
+        b8 = buttonLB + ": mouse double left-click" + "\n"
+    else:
+        b8 = buttonLB + ": " + dict.get(buttonLB) + "\n"
+    if dict.get(buttonRB) == "None":
+        b9 = buttonRB + ": mouse right click" + "\n"
+    else:
+        b9 = buttonRB + ": " + dict.get(buttonRB) + "\n"
+    buttonList = h1 + h2 + b0 + b1 + h3 + b2 + b3 + b4 + b5 + b6 + b7 + h4 + b8 + b9 + b10 + b11 + b12 + b13
     command = dirPath + "/show-layer.sh " + buttonList
     print(command + "\n")
     subprocess.call('{0}'.format(command), shell=True)
@@ -111,54 +125,67 @@ def updateDict():
     configPath = sys.argv[2]
     with open(configPath, 'r') as file:
         config = yaml.safe_load(file)
-    if config[buttonLB] is None:
-        dict[buttonLB] = "None"
-    else:
-        dict[buttonLB] = config[buttonLB]
-    if config[buttonRB] is None:
-        dict[buttonRB] = "None"
-    else:
-        dict[buttonRB] = config[buttonRB]
-    if config[buttonLEFT] is None:
-        dict[buttonLEFT] = "None"
-    else:
-        dict[buttonLEFT] = config[buttonLEFT]
-    if config[buttonDOWN] is None:
-        dict[buttonDOWN] = "None"
-    else:
-        dict[buttonDOWN] = config[buttonDOWN]
-    if config[buttonLT] is None:
-        dict[buttonLT] = "None"
-    else:
-        dict[buttonLT] = config[buttonLT]
-    if config[buttonRT] is None:
-        dict[buttonRT] = "None"
-    else:
-        dict[buttonRT] = config[buttonRT]
-    if config[buttonBACK] is None:
+    # FUNCTIONS BUTTONS
+    if config['FUNCTIONS'][buttonBACK] == "":
         dict[buttonBACK] = "None"
     else:
-        dict[buttonBACK] = config[buttonBACK]
-    if config[buttonSTART] is None:
+        dict[buttonBACK] = config['FUNCTIONS'][buttonBACK]
+    if config['FUNCTIONS'][buttonSTART] == "":
         dict[buttonSTART] = "None"
     else:
-        dict[buttonSTART] = config[buttonSTART]
-    if config[buttonX] is None:
+        dict[buttonSTART] = config['FUNCTIONS'][buttonSTART]
+    # AXIS BUTTONS
+    if config['AXIS'][buttonLEFT] == "":
+        dict[buttonLEFT] = "None"
+        dict[buttonRIGHT] = "None"
+    else:
+        dict[buttonLEFT] = config['AXIS'][buttonLEFT]
+        if dict[buttonLEFT] == "left":
+            dict[buttonRIGHT] = "right"
+        else:
+            dict[buttonRIGHT] = config['AXIS'][buttonRIGHT]
+    if config['AXIS'][buttonDOWN] == "":
+        dict[buttonDOWN] = "None"
+        dict[buttonUP] = "None"
+    else:
+        dict[buttonDOWN] = config['AXIS'][buttonDOWN]
+        if dict[buttonDOWN] == "down":
+            dict[buttonUP] = "up"
+        else:
+            dict[buttonUP] = config['AXIS'][buttonUP]
+    if config['AXIS'][buttonLT] == "":
+        dict[buttonLT] = "None"
+    else:
+        dict[buttonLT] = config['AXIS'][buttonLT]
+    if config['AXIS'][buttonRT] == "":
+        dict[buttonRT] = "None"
+    else:
+        dict[buttonRT] = config['AXIS'][buttonRT]
+    # BUTTONS
+    if config['BUTTONS'][buttonLB] == "":
+        dict[buttonLB] = "None"
+    else:
+        dict[buttonLB] = config['BUTTONS'][buttonLB]
+    if config['BUTTONS'][buttonRB] == "":
+        dict[buttonRB] = "None"
+    else:
+        dict[buttonRB] = config['BUTTONS'][buttonRB]
+    if config['BUTTONS'][buttonX] == "":
         dict[buttonX] = "None"
     else:
-        dict[buttonX] = config[buttonX]
-    if config[buttonY] is None:
+        dict[buttonX] = config['BUTTONS'][buttonX]
+    if config['BUTTONS'][buttonY] == "":
         dict[buttonY] = "None"
     else:
-        dict[buttonY] = config[buttonY]
-    if config[buttonB] is None:
+        dict[buttonY] = config['BUTTONS'][buttonY]
+    if config['BUTTONS'][buttonB] == "":
         dict[buttonB] = "None"
     else:
-        dict[buttonB] = config[buttonB]
-    if config[buttonA] is None:
+        dict[buttonB] = config['BUTTONS'][buttonB]
+    if config['BUTTONS'][buttonA] == "":
         dict[buttonA] = "None"
     else:
-        dict[buttonA] = config[buttonA]
+        dict[buttonA] = config['BUTTONS'][buttonA]
     print(dict)
 
 def pressedLB():
@@ -166,6 +193,9 @@ def pressedLB():
     if b == "None":
         print('LB Pressed')
         pyautogui.mouseDown()
+    elif b == "LDclick":
+        print('LB Double-click')
+        pyautogui.click(clicks=2)
     else:
         print('LB Pressed')
         pyautogui.keyDown(b)
@@ -175,6 +205,8 @@ def releasedLB():
     if b == "None":
         print('LB Released')
         pyautogui.mouseUp()
+    elif b == "LDclick":
+        print('LB Double-click Done')
     else:
         print('LB Released')
         pyautogui.keyUp(b)
@@ -199,12 +231,12 @@ def releasedRB():
 
 def pressBACK():
     b = dict.get(buttonBACK)
-    if b == "None":
+    if b == "changeLayer()":
         changeLayer()
 
 def pressSTART():
     b = dict.get(buttonSTART)
-    if b == "None":
+    if b == "showLayer()":
         showLayer()
 
 def pressedX():
@@ -270,6 +302,7 @@ def main():
 
     killDubProcesses()
     updateDict()
+    showLayer()
     gamepad.startBackgroundUpdates()
 
     gamepad.addButtonPressedHandler(buttonLB, pressedLB)
@@ -289,16 +322,40 @@ def main():
 
     try:
         while running and gamepad.isConnected():
+            b = dict.get(buttonDOWN)
             vertical = -gamepad.axis(buttonDOWN)
-            if vertical == -1.0:
-                pyautogui.move(0, speed)
-            elif vertical == 1.0:
-                pyautogui.move(0, -speed)
+            if b == "None":
+                if vertical == -1.0:
+                    pyautogui.move(0, speed)
+                elif vertical == 1.0:
+                    pyautogui.move(0, -speed)
+            elif b == "down":
+                if vertical == -1.0:
+                    pyautogui.press(b)
+                elif vertical == 1.0:
+                    pyautogui.press('up')
+            else:
+                if vertical == -1.0:
+                    pyautogui.press(b)
+                elif vertical == 1.0:
+                    pyautogui.press(dict.get(buttonUP))
+            b = dict.get(buttonLEFT)
             horizontal = gamepad.axis(buttonLEFT)
-            if horizontal == -1.0:
-                pyautogui.move(-speed, 0)
-            elif horizontal == 1.0:
-                pyautogui.move(speed, 0)
+            if b == "None":
+                if horizontal == -1.0:
+                    pyautogui.move(-speed, 0)
+                elif horizontal == 1.0:
+                    pyautogui.move(speed, 0)
+            elif b == "left":
+                if horizontal == -1.0:
+                    pyautogui.press(b)
+                elif horizontal == 1.0:
+                    pyautogui.press('right')
+            else:
+                if horizontal == -1.0:
+                    pyautogui.press(b)
+                elif horizontal == 1.0:
+                    pyautogui.press(dict.get(buttonRIGHT))
             b = dict.get(buttonLT)
             if b != "None":
                 lt = gamepad.axis(buttonLT)
