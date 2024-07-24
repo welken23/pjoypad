@@ -48,6 +48,7 @@ def killDubProcesses():
 # get the current index, path to the working directory, path to the layer file
 def getCurrentParameters():
     global layerList
+    layerList = []
     currentIndex = 0
     filePath = os.path.realpath(__file__)
     dirPath = os.path.dirname(os.path.abspath(sys.argv[2]))
@@ -292,54 +293,40 @@ def main():
 
     try:
         while running and gamepad.isConnected():
-            b = dict.get(buttonDOWN)
-            vertical = -gamepad.axis(buttonDOWN)
-            if b == "none":
-                if vertical == -1.0:
-                    pyautogui.move(0, speed)
-                elif vertical == 1.0:
-                    pyautogui.move(0, -speed)
-            elif b == "down":
-                if vertical == -1.0:
-                    pyautogui.press(b)
-                elif vertical == 1.0:
-                    pyautogui.press('up')
-            else:
-                if vertical == -1.0:
-                    pyautogui.press(b)
-                elif vertical == 1.0:
-                    pyautogui.press(dict.get(buttonUP))
             b = dict.get(buttonLEFT)
+            c = dict.get(buttonRIGHT)
             horizontal = gamepad.axis(buttonLEFT)
-            if b == "none":
-                if horizontal == -1.0:
-                    pyautogui.move(-speed, 0)
-                elif horizontal == 1.0:
-                    pyautogui.move(speed, 0)
-            elif b == "left":
-                if horizontal == -1.0:
-                    pyautogui.press(b)
-                elif horizontal == 1.0:
-                    pyautogui.press('right')
-            else:
-                if horizontal == -1.0:
-                    pyautogui.press(b)
-                elif horizontal == 1.0:
-                    pyautogui.press(dict.get(buttonRIGHT))
+            if b=="none" and horizontal==-1.0:
+                pyautogui.move(-speed, 0)
+            elif c=="none" and horizontal==1.0:
+                pyautogui.move(speed, 0)
+            elif b!="none" and horizontal==-1.0:
+                pyautogui.press(b)
+            elif c!="none" and horizontal==1.0:
+                pyautogui.press(c)
+            b = dict.get(buttonDOWN)
+            c = dict.get(buttonUP)
+            vertical = -gamepad.axis(buttonDOWN)
+            if b=="none" and vertical==-1.0:
+                pyautogui.move(0, speed)
+            elif c=="none" and vertical==1.0:
+                pyautogui.move(0, -speed)
+            elif b!="none" and vertical==-1.0:
+                pyautogui.press(b)
+            elif c!="none" and vertical==1.0:
+                pyautogui.press(dict.get(buttonUP))
             b = dict.get(buttonLT)
-            if b != "none":
-                lt = gamepad.axis(buttonLT)
-                if lt == 1.0:
+            lt = gamepad.axis(buttonLT)
+            if b!="none" and lt==1.0:
                     pyautogui.keyDown(b)
-                elif lt == -1.0:
+            elif b!="none" and lt==-1.0:
                     pyautogui.keyUp(b)
             b = dict.get(buttonRT)
-            if b != "none":
-                rt = gamepad.axis(buttonRT)
-                if rt == 1.0:
-                    pyautogui.keyDown(b)
-                elif rt == -1.0:
-                    pyautogui.keyUp(b)
+            rt = gamepad.axis(buttonRT)
+            if b!="none" and rt==1.0:
+                pyautogui.keyDown(b)
+            elif b!="none" and rt==-1.0:
+                pyautogui.keyUp(b)
             time.sleep(pollInterval)
     finally:
         gamepad.disconnect()
